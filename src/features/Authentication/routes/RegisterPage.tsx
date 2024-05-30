@@ -46,7 +46,7 @@ export const RegisterPage = () => {
           <span>{error}</span>
         </div>
       )}
-      <Link to='/' className="sm:mx-auto sm:w-full sm:max-w-sm mt-4 text-sm text-gray-100 hover:underline">Already have an account? Sign In!</Link>
+      <Link to='/login' className="sm:mx-auto sm:w-full sm:max-w-sm mt-4 text-sm text-gray-100 hover:underline">Already have an account? Sign In!</Link>
     </div>
   )
 }

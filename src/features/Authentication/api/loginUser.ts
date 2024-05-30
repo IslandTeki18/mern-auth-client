@@ -8,7 +8,7 @@ export const loginUser = async (email: string, password: string) => {
       password,
     },
     {
-      headers: { "Content-Type": "application/json" },
+      headers: {"Content-Type": "application/json"},
     }
   );
   return response.data;
