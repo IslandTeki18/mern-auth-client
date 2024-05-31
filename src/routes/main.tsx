@@ -1,17 +1,32 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { LoginPage, RegisterPage, HomePage, DashboardPage } from "~src/features";
 import { Navbar } from "~src/components";
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAuthContext } from "~src/hooks/useAuthContext";
 
 function AuthenticationLayout() {
     const { userInfo } = useAuthContext()
+
     return (
         <>
-            {userInfo && <Navbar />}
-            {userInfo ? (<Outlet />) : (<Navigate to="/" replace={true} />)}
+            {userInfo !== null && <Navbar />}
+            <Outlet />
         </>
     )
+}
+
+function ProtectedRoute({ element }: { element: React.ReactElement }) {
+    const { userInfo } = useAuthContext()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (userInfo === null) {
+            navigate("/")
+        }
+    }, [userInfo, navigate])
+
+    return element
 }
 
 export const mainRoutes = [
@@ -31,8 +46,8 @@ export const mainRoutes = [
         element: <AuthenticationLayout />,
         children: [
             {
-                path: "dashboard",
-                element: <DashboardPage />,
+                path: "/dashboard",
+                element: <ProtectedRoute element={<DashboardPage />} />,
             },
         ]
     },
