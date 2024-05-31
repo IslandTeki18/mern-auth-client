@@ -17,7 +17,7 @@ export const useSignUp = () => {
       localStorage.setItem("userInfo", JSON.stringify(response));
       if (response) {
         dispatch({ type: "LOGIN", payload: response });
-        navigate("/");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);

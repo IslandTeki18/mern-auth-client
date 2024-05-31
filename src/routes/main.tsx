@@ -1,7 +1,7 @@
 import * as React from "react";
-import { LoginPage, RegisterPage, HomePage } from "~src/features";
+import { LoginPage, RegisterPage, HomePage, DashboardPage } from "~src/features";
 import { Navbar } from "~src/components";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import { useAuthContext } from "~src/hooks/useAuthContext";
 
 function AuthenticationLayout() {
@@ -9,26 +9,30 @@ function AuthenticationLayout() {
     return (
         <>
             {userInfo && <Navbar />}
-            <Outlet />
+            {userInfo ? (<Outlet />) : (<Navigate to="/" replace={true} />)}
         </>
     )
 }
 
 export const mainRoutes = [
     {
+        path: "/",
+        element: <HomePage />,
+    },
+    {
+        path: "/login",
+        element: <LoginPage />,
+    },
+    {
+        path: "/register",
+        element: <RegisterPage />,
+    },
+    {
         element: <AuthenticationLayout />,
         children: [
             {
-                path: "/",
-                element: <HomePage />,
-            },
-            {
-                path: "login",
-                element: <LoginPage />,
-            },
-            {
-                path: "register",
-                element: <RegisterPage />,
+                path: "dashboard",
+                element: <DashboardPage />,
             },
         ]
     },
