@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { LabelInput } from '~src/components'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSignUp } from '../hooks'
+import { useAuthContext } from '~src/hooks/useAuthContext'
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState('')
@@ -10,6 +11,15 @@ export const RegisterPage = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const { signUp, isLoading, error } = useSignUp()
+  const { user } = useAuthContext()
+  const navigate = useNavigate()
+
+
+  useEffect(() => {
+    if (user !== null) {
+      navigate('/dashboard')
+    }
+  }, [user, navigate])
 
   function handleSumbit(e: React.FormEvent) {
     e.preventDefault()

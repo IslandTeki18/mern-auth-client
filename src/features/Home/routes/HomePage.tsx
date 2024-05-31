@@ -1,8 +1,17 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '~src/hooks/useAuthContext';
 
 export const HomePage = () => {
   const navigate = useNavigate();
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    if (user !== null) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
 
   return (
     <div className="flex flex-col w-full">
