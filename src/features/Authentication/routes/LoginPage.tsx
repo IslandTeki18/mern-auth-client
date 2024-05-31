@@ -1,13 +1,24 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { LabelInput } from '~src/components'
 import { Link } from 'react-router-dom'
 import { useSignIn } from '../hooks'
+import { useAuthContext } from '~src/hooks/useAuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export const LoginPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const { error, isLoading, signIn } = useSignIn()
+    const { user } = useAuthContext()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (user !== null) {
+            navigate('/dashboard')
+        }
+    }, [user, navigate])
+
 
     function handleSumbit(e: React.FormEvent) {
         e.preventDefault()

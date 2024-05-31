@@ -6,25 +6,25 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useAuthContext } from "~src/hooks/useAuthContext";
 
 function AuthenticationLayout() {
-    const { userInfo } = useAuthContext()
+    const { user } = useAuthContext()
 
     return (
         <>
-            {userInfo !== null && <Navbar />}
+            {user !== null && <Navbar />}
             <Outlet />
         </>
     )
 }
 
 function ProtectedRoute({ element }: { element: React.ReactElement }) {
-    const { userInfo } = useAuthContext()
+    const { user } = useAuthContext()
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (userInfo === null) {
+        if (user === null) {
             navigate("/")
         }
-    }, [userInfo, navigate])
+    }, [user, navigate])
 
     return element
 }
